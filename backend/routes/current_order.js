@@ -1,13 +1,37 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+let router = express.Router();
+let DB = require('../models');
 
-/* GET users listing. */
+/* 전체 주문 리스트 */
 router.get('/', function (req, res) {
-    res.json({});
+    DB.getOrdersList((err, result) => {
+        if (err) {
+            res.json("fail");
+        }
+        res.json(result);
+    });
 });
 
-router.post('/complete', function (req, res, next) {
-    res.json({});
+/* 완료된 최근 10개 주문 리스트 */
+router.get('/complete', function (req, res) {
+    DB.getLastOrders((err, result) => {
+        if (err) {
+            res.json("fail");
+        }
+        res.json(result);
+    });
+});
+
+/* 주문 상태 업데이트 */
+router.put('/complete', function (req, res, next) {
+    let num = req.body.id;
+    DB.updateOrder((err, result) => {
+        if (err) {
+            res.json("fail");
+        }
+        console.log(result);
+        res.json("success");
+    }, num);
 });
 
 module.exports = router;

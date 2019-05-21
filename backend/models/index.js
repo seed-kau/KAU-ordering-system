@@ -1,6 +1,6 @@
 const mysql = require('mysql2');
 const path = require('path');
-
+const config = require('../config');
 /**
  * +-------------+---------------+------+-----+-------------------+-------------------+
  *  | Field       | Type          | Null | Key | Default           | Extra             |
@@ -15,10 +15,11 @@ const path = require('path');
  */
 
 let pool = mysql.createPool({
-    host: '호스트',
-    user: '유저',
-    database: '데이터베이스',
-    password: '비밀번호',
+    host: config.host,
+    port: config.port,
+    user: config.user,
+    database: config.database,
+    password: config.password,
     connectionLimit: 10,
     queueLimit: 0
 });
@@ -26,8 +27,11 @@ let pool = mysql.createPool({
 module.exports = {
     addOrder: (callback, order) => {
         pool.getConnection((err, con) => {
+            if (err) {
+                console.log(err);
+            }
             const sql = `INSERT INTO logs (table_num, order_list, total_price) VALUES (?, ?, ?)`;
-            con.query(sql, order, (err, result, fields) => {
+            con.query(sql, [order.table_num, order.menus, order.total_price], (err, result, fields) => {
                 con.release();
                 if (err) {
                     return callback(`추가 실패`);
@@ -39,6 +43,9 @@ module.exports = {
 
     updateOrder: (callback, order_num) => {
         pool.getConnection((err, con) => {
+            if (err) {
+                console.log(err);
+            }
             const sql = `UPDATE logs SET status="finish" WHERE id = ?`;
             con.query(sql, order_num, (err, result, fields) => {
                 con.release();
@@ -52,6 +59,9 @@ module.exports = {
 
     getOrdersList: (callback) => {
         pool.getConnection((err, con) => {
+            if (err) {
+                console.log(err);
+            }
             const sql = `SELECT * FROM logs WHERE status = ?`;
             con.query(sql, "ready", (err, result, fields) => {
                 con.release();
@@ -60,12 +70,16 @@ module.exports = {
                     return callback(`조회 실패`);
                 }
                 // 고민
-                const order_list = {};
+                const order_list = [];
                 for (let i = 0; i < result.length; i++) {
-                    order_list[i].order_num = result[i].id;
-                    order_list[i].order_list = result[i].order_list;
-                    order_list[i].order_status = result[i].status;
-                    order_list[i].total_price = result[i].total_price;
+                    let order = {};
+                    order.id = result[i].id;
+                    order.table_num = result[i].table_num;
+                    order.list = result[i].order_list;
+                    order.status = result[i].status;
+                    order.total_price = result[i].total_price;
+
+                    order_list[i] = order;
                 }
                 return callback(null, order_list);
             });
@@ -74,6 +88,9 @@ module.exports = {
 
     getLastOrders: (callback) => {
         pool.getConnection((err, con) => {
+            if (err) {
+                console.log(err);
+            }
             const sql = `SELECT * FROM logs WHERE status = ? ORDER BY order_time DESC LIMIT 10`;
             con.query(sql, "finish", (err, result, fields) => {
                 con.release();
@@ -81,12 +98,16 @@ module.exports = {
                     return callback(`마지막 10개 조회 실패`);
                 }
                 // 고민
-                const order_list = {};
+                const order_list = [];
                 for (let i = 0; i < result.length; i++) {
-                    order_list[i].order_num = result[i].id;
-                    order_list[i].order_list = result[i].order_list;
-                    order_list[i].order_status = result[i].status;
-                    order_list[i].total_price = result[i].total_price;
+                    let order = {};
+                    order.id = result[i].id;
+                    order.table_num = result[i].table_num;
+                    order.order_list = result[i].order_list;
+                    order.order_status = result[i].status;
+                    order.total_price = result[i].total_price;
+
+                    order_list[i] = order;
                 }
                 return callback(null, order_list);
             });
