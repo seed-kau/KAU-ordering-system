@@ -70,7 +70,7 @@ module.exports = {
                     return callback(`조회 실패`);
                 }
                 // 고민
-                const order_list = {};
+                const order_list = [];
                 for (let i = 0; i < result.length; i++) {
                     let order = {};
                     order.id = result[i].id;
@@ -98,7 +98,7 @@ module.exports = {
                     return callback(`마지막 10개 조회 실패`);
                 }
                 // 고민
-                const order_list = {};
+                const order_list = [];
                 for (let i = 0; i < result.length; i++) {
                     let order = {};
                     order.id = result[i].id;

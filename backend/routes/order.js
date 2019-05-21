@@ -8,7 +8,7 @@ router.post('/order/menu', function (req, res, next) {
     let list = "";
     for (let i = 0; i < req.body.menus.length; i++) {
         if (body.menus[i].count !== 0) {
-            list += body.menus[i].name + " " + body.menus[i].count + "\n";
+            list += body.menus[i].name + " " + body.menus[i].count + "/";
         }
     }
 

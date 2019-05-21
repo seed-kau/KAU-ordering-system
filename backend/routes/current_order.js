@@ -24,7 +24,7 @@ router.get('/complete', function (req, res) {
 
 /* 주문 상태 업데이트 */
 router.put('/complete', function (req, res, next) {
-    let num = req.body.order_num;
+    let num = req.body.id;
     DB.updateOrder((err, result) => {
         if (err) {
             res.json("fail");
