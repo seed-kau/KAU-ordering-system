@@ -123,7 +123,7 @@ export default {
         },
         {
           name: "토닉워터",
-          price : 2000,
+          price : 5000,
           count : 0,
         },
       ];
