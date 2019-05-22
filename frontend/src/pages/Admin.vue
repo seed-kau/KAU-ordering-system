@@ -86,7 +86,10 @@ export default {
         .put("/admin/complete", { id: item.id })
         .then(this.initialize())
         .then(this.getOrder())
-        .then(this.getCompletedOrder());
+        .then(this.getCompletedOrder())
+        .then (temp => {
+          window.location.reload(true)
+        })
     }
   }
 };
