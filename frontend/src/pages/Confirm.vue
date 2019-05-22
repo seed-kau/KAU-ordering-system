@@ -49,14 +49,12 @@ export default {
   }),
   created() {
     this.tableNum = this.$route.params.tableNum;
-    console.log(this.tableNum)
     this.menus = this.$route.params.menus;
-    console.log(this.menus)
     this.totalPrice = this.$route.params.totalPrice;
-    console.log(this.totlaPrice)
   },
   methods: {
     copyNumber() {
+      console.log(this.tableNum)
       var $temp = $("<input>");
       $("body").append($temp);
       $temp.val("카카오뱅크 : 3333-03-2611273 최원주").select();
