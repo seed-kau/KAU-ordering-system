@@ -49,6 +49,7 @@ export default {
   }),
   created() {
     this.tableNum = this.$route.params.tableNum;
+    console.log(this.tableNum)
     this.menus = this.$route.params.menus;
     this.totalPrice = this.$route.params.totalPrice;
   },
