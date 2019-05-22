@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col" id="title">은익체전 주문 시스템 {{ tableNum }}</div>
+      <div class="col" id="title">은익체전 주문 시스템</div>
+      <div class="col-2">{{tableNum}}번</div>
     </div>
     <div class="row menus">
       <v-data-table 
@@ -63,14 +64,17 @@ export default {
   },
   methods: {
     order () {
+        if (this.totalPrice == 0 ) {
+            return
+        }
         var orderMenu = {
             "tableNum" : this.tableNum,
             "menus" : this.menus,
             "totalPrice" : this.totalPrice,
         }
-        this.$http.post('/order/menus', orderMenu).then ((response) => {
+        this.$http.post('/order/menu', orderMenu).then ((response) => {
             if (response.status == 200) {
-                this.$router.push('/confirm')
+                this.$router.push({name : 'confirm', props : true, params : orderMenu})
             }
         })
     },
@@ -128,7 +132,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #title {
   font-size: 30px;
   margin-top: 30px;
@@ -137,6 +141,8 @@ export default {
 
 .menus {
     margin-top: 30px;
+    align-items : center;
+    margin-left: -13px;
 }
 
 #count {

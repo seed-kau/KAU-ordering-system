@@ -20,6 +20,9 @@ export default new Router ({
         name : 'confirm',
         components : {
             default: Confirm,
+        } ,
+        props : (route) => {
+            orderMenu : orderMenu
         }
     },
     {
