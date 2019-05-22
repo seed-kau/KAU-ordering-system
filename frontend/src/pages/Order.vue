@@ -68,9 +68,9 @@ export default {
             return
         }
         var orderMenu = {
-            "tableNum" : this.tableNum,
+            "table_num" : this.tableNum,
             "menus" : this.menus,
-            "totalPrice" : this.totalPrice,
+            "total_price" : this.totalPrice,
         }
         this.$http.post('/order/menu', orderMenu).then ((response) => {
             if (response.status == 200) {

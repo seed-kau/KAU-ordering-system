@@ -1,6 +1,7 @@
 const express = require('express');
 let router = express.Router();
 let DB = require('../models');
+var path = require('path')
 
 /* 주문 저장 */
 router.post('/order/menu', function (req, res, next) {
@@ -25,5 +26,8 @@ router.post('/order/menu', function (req, res, next) {
         res.json("success");
     }, order);
 });
+
+router.get('/order/:id', function (req, res, next) {
+    res.sendFile(path.join(__dirname, '../public', 'index.html'))});
 
 module.exports = router;

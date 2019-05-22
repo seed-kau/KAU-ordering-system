@@ -8,6 +8,12 @@ var indexRouter = require('./routes/order');
 var adminRouter = require('./routes/current_order');
 
 var app = express();
+app.use(require('connect-history-api-fallback')())
+app.all('/*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+  });
 
 require('dotenv').config();
 // view engine setup

@@ -1,5 +1,14 @@
 module.exports = {
   devServer: {
-    proxy: 'http://bc3d46df.ngrok.io'
-  }
+    proxy: {
+      '/order/menu': {
+        target: 'http://localhost:3000/order/menu',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/order/menu' : ''
+        }
+      }
+    },
+  },
+  outputDir: '../backend/public'
 }
