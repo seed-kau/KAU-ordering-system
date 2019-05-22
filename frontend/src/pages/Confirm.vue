@@ -51,7 +51,9 @@ export default {
     this.tableNum = this.$route.params.tableNum;
     console.log(this.tableNum)
     this.menus = this.$route.params.menus;
+    console.log(this.menus)
     this.totalPrice = this.$route.params.totalPrice;
+    console.log(this.totlaPrice)
   },
   methods: {
     copyNumber() {
