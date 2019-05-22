@@ -91,7 +91,7 @@ module.exports = {
             if (err) {
                 console.log(err);
             }
-            const sql = `SELECT * FROM logs WHERE status = ? ORDER BY order_time DESC LIMIT 10`;
+            const sql = `SELECT * FROM logs WHERE status = ? ORDER BY order_time DESC LIMIT 5`;
             con.query(sql, "finish", (err, result, fields) => {
                 con.release();
                 if (err) {
@@ -103,8 +103,8 @@ module.exports = {
                     let order = {};
                     order.id = result[i].id;
                     order.table_num = result[i].table_num;
-                    order.order_list = result[i].order_list;
-                    order.order_status = result[i].status;
+                    order.list = result[i].order_list;
+                    order.status = result[i].status;
                     order.total_price = result[i].total_price;
 
                     order_list[i] = order;
